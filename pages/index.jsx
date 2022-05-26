@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import VistaContainer from '../components/VistaContainer'
 import { useSelector, useDispatch } from 'react-redux'
@@ -12,6 +11,8 @@ export default function Index() {
     const playlistName = useSelector((state) => state.location.currentPlaylist)
     const dispatch = useDispatch()
     const [cursorXY, setCursorXY] = useState({ x: null, y: null })
+
+    // functions allowing 3dvista to communicate with react
     useEffect(() => {
         window.changeLocation = (name) => {
             console.log(`changeLocation(${name})`)
@@ -25,11 +26,9 @@ export default function Index() {
             })
         }
         window.hover = (hotspotName) => {
-            console.log(`hover(${hotspotName})`)
             dispatch(hover({ name: hotspotName }))
         }
         window.quitHover = () => {
-            console.log(`quitHover()`)
             dispatch(quitHover())
         }
         window.clickHotspot = (name) => {
@@ -37,6 +36,8 @@ export default function Index() {
             // TODO: not implemented
         }
     }, [dispatch])
+
+    // control 3dvista to change lcoation once redux location changed
     useEffect(() => {
         console.log(locationName)
         if (locationName !== null) {
@@ -45,25 +46,30 @@ export default function Index() {
             }
         }
     }, [locationName])
+
+    // update cursorXY when mouse moves
     useEffect(() => {
-        const canvas = document.querySelectorAll('[data-engine="three.js r135"]')?.[0];
-        function handleMouseMove(e) {
-            // var rect = canvas.getBoundingClientRect(),
-            // scaleX = canvas.width / rect.width,    // relationship bitmap vs. element for x
-            // scaleY = canvas.height / rect.height;
-            console.log('triggered')
+        const handleHover2 = (e) => {
             setCursorXY({ x: e.clientX, y: e.clientY })
         }
-        console.log(canvas)
-        canvas?.addEventListener('mousemove', handleMouseMove)
-        return () => {
-            // document.onmousemove = null
-            canvas?.removeEventListener('mousemove', handleMouseMove, false)
+        const handleHover = (e) => {
+            console.log(e.target)
+            e.target.addEventListener('mousemove', handleHover2)
         }
-    }, [hoverName])
-    useEffect(() => {
-        console.log(cursorXY)
-    }, [cursorXY])
+        console.log('add mouseover')
+        window.addEventListener('mouseover', handleHover)
+
+        return () => {
+            console.log('clean up')
+            const cleanup = (e) => {
+                console.log(e.target)
+                e.target.removeEventListener('mousemove', handleHover2)
+            }
+            window.removeEventListener('mouseover', handleHover)
+            window.addEventListener('mouseover', cleanup)
+            window.removeEventListener('mouseover', cleanup)
+        }
+    }, [])
 
     return (
         <div id='main' style={{height: '100vh', width: '100vw'}}>
@@ -87,7 +93,6 @@ export default function Index() {
                         dispatch(gotoLocation({ locationName: next }))
                     }
                 }}>
-                {cursorXY.x}
             </div>
             <div
                 style={{
@@ -106,15 +111,19 @@ export default function Index() {
                         dispatch(gotoLocation({ locationName: previous }))
                     }
                 }}>
-                    {cursorXY.y}
             </div>
-            <div className="hoverDiv" 
+            <div 
+            className="hoverDiv" 
                 style={{ 
-                    top: 100, 
-                    left: 100, 
-                    // display: hoverName === null ? 'none' : 'block' 
+                    top: cursorXY.y ? cursorXY.y + 30 : 0, 
+                    left: cursorXY.x ? cursorXY.x + 30: 0, 
+                    position: 'fixed',
+                    width: 100,
+                    height: 100,
+                    backgroundColor: 'aqua',
+                    zIndex: 1,
+                    display: hoverName === null ? 'none' : 'block'
                 }}>
-                {hoverName}
             </div>
         </div>
     )

@@ -14,12 +14,3 @@ a {
 * {
   box-sizing: border-box;
 }
-
-.hoverDiv {
-  z-index: 10;
-  position: fixed;
-  background-color: white;
-  min-width: 50px;
-  min-height: 50px;
-  display: none;
-}
