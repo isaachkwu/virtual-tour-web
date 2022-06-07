@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { gotoLocation } from '../redux/location/locationSlice'
 import { playlistDetail, nextLocationName, previousLocationName } from '../data/playlistDetail'
 import { hover, quitHover } from '../redux/hover/hoverSlice'
+import Menubar from '../components/Menubar'
+import ProgressBar from '../components/ProgressBar'
 
 export default function Index() {
     const locationName = useSelector((state) => state.location.currentLocation)
@@ -53,7 +55,7 @@ export default function Index() {
             setCursorXY({ x: e.clientX, y: e.clientY })
         }
         const handleHover = (e) => {
-            console.log(e.target)
+            // console.log(e.target)
             e.target.addEventListener('mousemove', handleHover2)
         }
         console.log('add mouseover')
@@ -62,7 +64,7 @@ export default function Index() {
         return () => {
             console.log('clean up')
             const cleanup = (e) => {
-                console.log(e.target)
+                // console.log(e.target)
                 e.target.removeEventListener('mousemove', handleHover2)
             }
             window.removeEventListener('mouseover', handleHover)
@@ -74,44 +76,8 @@ export default function Index() {
     return (
         <div id='main' style={{height: '100vh', width: '100vw'}}>
             <VistaContainer />
-            <div
-                style={{
-                    position: 'fixed',
-                    bottom: 5,
-                    right: 5,
-                    width: 50,
-                    height: 50,
-                    backgroundColor: 'red',
-                    zIndex: 1
-                }}
-                onClick={() => {
-                    console.log('forward')
-                    console.log(playlistDetail)
-                    const next = nextLocationName(locationName ? locationName : 'ice', playlistDetail)
-                    console.log(`next: ${next}`)
-                    if (next) {
-                        dispatch(gotoLocation({ locationName: next }))
-                    }
-                }}>
-            </div>
-            <div
-                style={{
-                    position: 'fixed',
-                    left: 5,
-                    bottom: 5,
-                    width: 50,
-                    height: 50,
-                    backgroundColor: 'blue',
-                    zIndex: 1
-                }}
-                onClick={() => {
-                    console.log('back')
-                    const previous = previousLocationName(locationName ? locationName : 'ice', playlistDetail)
-                    if (previous) {
-                        dispatch(gotoLocation({ locationName: previous }))
-                    }
-                }}>
-            </div>
+            <Menubar />
+            <ProgressBar />
             <div 
             className="hoverDiv" 
                 style={{ 

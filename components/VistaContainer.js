@@ -333,9 +333,7 @@ const VistaContainer = () => {
         <div className="div2" >
           <div className="div3">
             <div className="div4">
-              <span className="span1">
-                Loading virtual tour. Please wait...
-              </span>
+            <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
           </div>
         </div>

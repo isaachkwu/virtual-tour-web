@@ -1,0 +1,36 @@
+.container {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.dot {
+  height: 20px;
+  width: 20px;
+  margin: 8px;
+  background-color: white;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.arrowLeft {
+  border: solid white;
+  border-width: 0 5px 5px 0;
+  display: inline-block;
+  padding: 10px;
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.arrowRight {
+  border: solid white;
+  border-width: 0 5px 5px 0;
+  display: inline-block;
+  padding: 10px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}

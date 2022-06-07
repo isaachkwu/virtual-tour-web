@@ -1,6 +1,7 @@
 export const playlistDetail = [
   {
     name: 'nature',
+    displayName: '校內設施',
     paronamas: [
       'ice',
       'green',
@@ -10,6 +11,7 @@ export const playlistDetail = [
   },
   {
     name: 's',
+    displayName: 'STEM教學設施',
     paronamas: [
       's1',
       's2',
@@ -35,6 +37,7 @@ export const playlistDetail = [
   },
   {
     name: 'a',
+    displayName: '運動教學設施',
     paronamas: [
       'a1',
       'a2',
@@ -53,6 +56,7 @@ export const playlistDetail = [
   },
   {
     name: 'd',
+    displayName: '音樂教學設施',
     paronamas: [
       'd1',
       'd2',
@@ -65,6 +69,7 @@ export const playlistDetail = [
   },
   {
     name: 'g',
+    displayName: '學校附近配套',
     paronamas: [
       'g1',
       'g2',
@@ -78,6 +83,7 @@ export const playlistDetail = [
   },
   {
     name: 'h',
+    displayName: '課外活動設備',
     paronamas: [
       'h1',
       'h2',
